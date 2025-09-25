@@ -2,17 +2,17 @@
 
 Um sistema completo de banco de dados MySQL para e-commerce com dados sintéticos gerados via Python.
 
-## 📊 Sobre o Projeto
+## 📊 Visão Geral do Projeto
 
-Este projeto implementa um banco de dados relacional para um e-commerce, contendo:
+Solução completa de banco de dados para e-commerce com *12 tabelas normalizadas*, contendo:
 
-- *12 tabelas* normalizadas
-- *~1.400 clientes fictícios* gerados programaticamente
-- *42 produtos* em 7 categorias
-- *20 fornecedores*
-- Dados de pedidos, pagamentos, entregas e avaliações
-- *Scripts Python para geração de dados massivos*
-- Consultas analíticas avançadas
+|    Módulo   |           Funcionalidades            |      Volume de Dados       |
+|-------------|--------------------------------------|----------------------------|
+| *Cadastro*  | Clientes PF/PJ, endereços, telefones | ~1.400 clientes            |
+| *Catálogo*  | Produtos, categorias, fornecedores   | 42 produtos / 7 categorias |
+| *Vendas*    | Pedidos, itens, pagamentos           | Dados massivos de vendas   |
+| *Logística* | Entregas, rastreamento               | Dados completos de entrega |
+| *Pós-venda* | Avaliações, histórico                | Sistema de feedback        |
 
 ## Diagrama de Entidade-Relacionamento do Banco:
 ![Diagrama do Banco](diagrama.jpg)
@@ -23,6 +23,16 @@ Este projeto implementa um banco de dados relacional para um e-commerce, contend
 - Dados criados via script Python com biblioteca Faker
 - Informações realisticamente distribuídas (nomes, emails, endereços brasileiros)
 - Relacionamentos consistentes entre tabelas
+
+## 🛠 *Tecnologias Utilizadas*
+
+|      Camada      |          Tecnologias          |
+|------------------|-------------------------------|
+| *Banco de Dados* | MySQL 8.0+                    |
+| *Linguagem*      | Python 3.8+                   |
+| *Bibliotecas*    | Faker, mysql-connector-python |
+| *Ferramentas*    | DrawSQL (Diagrama ER)         |
+
 
 ### Análises Business Intelligence
 - 10 consultas SQL analíticas prontas
