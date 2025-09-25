@@ -15,7 +15,7 @@ Este projeto implementa um banco de dados relacional para um e-commerce, contend
 - Consultas analíticas avançadas
 
 ## Diagrama de Entidade-Relacionamento do Banco:
-![Diagrama do Banco] (diagrama.png)
+![Diagrama do Banco](diagrama.jpg)
 
 ## 🎯 Destaques Técnicos
 
