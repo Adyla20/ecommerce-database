@@ -38,3 +38,8 @@ Solução completa de banco de dados para e-commerce com *12 tabelas normalizada
 - 10 consultas SQL analíticas prontas
 - Métricas de vendas, ticket médio, conversão
 - Análise de performance e comportamento de clientes
+
+## 👩🏻💻 Autor
+**Ádyla Iasmin Barbosa da Silva**  
+📧 [Email](adylaiasmim811@gmail.com)  
+🔗 [LinkedIn](www.linkedin.com/in/ádyla-iasmin-b-67a393232)
