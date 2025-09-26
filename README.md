@@ -15,7 +15,7 @@ Solução completa de banco de dados para e-commerce com *12 tabelas normalizada
 | *Pós-venda* | Avaliações, histórico                | Sistema de feedback        |
 
 ## Diagrama de Entidade-Relacionamento do Banco:
-![Diagrama do Banco](diagrama.jpg) 
+![<img src="caminho/para/imagem.png" width="400" alt="Diagrama do Banco de Dados">](diagrama.jpg) 
 
 ## 🎯 Destaques Técnicos
 
