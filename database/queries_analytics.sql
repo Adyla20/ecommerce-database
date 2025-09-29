@@ -7,6 +7,7 @@
 -- 1. TOP 10 PRODUTOS MAIS VENDIDOS (ÚLTIMO TRIMESTRE)
 -- OBJETIVO: Identificar os produtos com maior volume de vendas para otimização de estoque,
 -- priorização de fornecedores e estratégias de marketing segmentadas.
+
 SELECT 
   p.IDPRODUTO,
   p.NOME_PRODUTO,
@@ -20,9 +21,11 @@ GROUP BY p.IDPRODUTO, p.NOME_PRODUTO
 ORDER BY total_vendido_qtd DESC
 LIMIT 10;
 
+
 -- 2. TAXA DE CONVERSÃO POR MÊS (ÚLTIMOS 12 MESES)
 -- OBJETIVO: Analisar a eficiência da conversão de clientes em pedidos, identificando
 -- sazonalidades e eficácia das campanhas de marketing ao longo do tempo.
+
 SELECT
   DATE_FORMAT(mes.m, '%Y-%m') AS ano_mes,
   COALESCE(pedidos_qt.pedidos, 0) AS pedidos,
@@ -49,9 +52,11 @@ LEFT JOIN (
 ) novos_clientes_qt ON DATE_FORMAT(mes.m, '%Y-%m-01') = novos_clientes_qt.mes_ref
 ORDER BY ano_mes;
 
+
 -- 3. PRODUTOS COM MAIOR TAXA DE CANCELAMENTO
 -- OBJETIVO: Identificar produtos problemáticos que podem indicar issues de qualidade,
 -- descrição inadequada, preço não competitivo ou problemas logísticos.
+
 SELECT
   p.IDPRODUTO,
   p.NOME_PRODUTO,
@@ -68,9 +73,11 @@ HAVING qtd_total_vendida > 0
 ORDER BY taxa_cancelamento DESC
 LIMIT 10;
 
+
 -- 4. TICKET MÉDIO E DISTRIBUIÇÃO POR CATEGORIA
 -- OBJETIVO: Analisar o valor médio gasto por pedido em cada categoria, orientando
 -- estratégias de pricing, cross-selling e composição de mix de produtos.
+
 SELECT
   c.IDCATEGORIA,
   c.NOME_CATEGORIA,
@@ -86,9 +93,11 @@ WHERE ped.STATUS = 'PAGO'
 GROUP BY c.IDCATEGORIA, c.NOME_CATEGORIA
 ORDER BY ticket_medio_por_categoria DESC;
 
+
 -- 5. MÉTODO DE PAGAMENTO MAIS POPULAR
 -- OBJETIVO: Entender as preferências de pagamento dos clientes para otimizar custos
 -- operacionais (taxas), melhorar a experiência de checkout e planejar conciliações.
+
 SELECT
   p.METODO,
   COUNT(DISTINCT p.ID_PEDIDO) AS num_pedidos,
@@ -100,9 +109,11 @@ WHERE p.STATUS = 'APROVADO'
 GROUP BY p.METODO
 ORDER BY total_transacionado DESC;
 
+
 -- 6. ANÁLISE DE CHURN: CLIENTES RECORRENTES VS ONE-TIME
 -- OBJETIVO: Mensurar a retenção de clientes e eficácia das estratégias de fidelização,
 -- identificando oportunidades para aumentar o lifetime value dos clientes.
+
 WITH analise_clientes AS (
   SELECT 
     c.IDCLIENTE,
@@ -124,9 +135,11 @@ FROM analise_clientes
 GROUP BY tipo_cliente
 ORDER BY receita_total DESC;
 
+
 -- 7. TEMPO MÉDIO DE PROCESSAMENTO POR TRANSPORTADORA
 -- OBJETIVO: Avaliar a performance logística das transportadoras, impactando diretamente
 -- na satisfação do cliente (NPS), taxas de devolução e reputação do e-commerce.
+
 SELECT
   e.TRANSPORTADORA,
   COUNT(*) AS pedidos_entregues,
@@ -140,9 +153,11 @@ WHERE e.STATUS = 'ENTREGUE'
 GROUP BY e.TRANSPORTADORA
 ORDER BY tempo_medio_dias ASC;
 
+
 -- 8. TOP 5 ESTADOS COM MAIOR NÚMERO DE CLIENTES
 -- OBJETIVO: Suportar decisões de expansão geográfica, planejamento logístico
 -- (centros de distribuição) e campanhas de marketing regionalizadas.
+
 SELECT 
   e.ESTADO AS uf,
   COUNT(DISTINCT e.ID_CLIENTE) AS clientes_uf
@@ -151,10 +166,12 @@ GROUP BY e.ESTADO
 ORDER BY clientes_uf DESC
 LIMIT 5;
 
+
 -- 9. PRODUTOS MELHOR E PIOR AVALIADOS
 -- OBJETIVO: Identificar best-sellers e produtos problemáticos para orientar ações de
 -- merchandising, gestão de catálogo e desenvolvimento de produto.
 -- Top 3 Melhores Avaliados
+
 SELECT 
   p.IDPRODUTO, 
   p.NOME_PRODUTO, 
@@ -168,6 +185,7 @@ ORDER BY avg_nota DESC, num_reviews DESC
 LIMIT 3;
 
 -- Bottom 3 Piores Avaliados
+
 SELECT 
   p.IDPRODUTO, 
   p.NOME_PRODUTO, 
@@ -180,9 +198,11 @@ HAVING COUNT(a.IDAVALIACAO) >= 3
 ORDER BY avg_nota ASC, num_reviews DESC
 LIMIT 3;
 
+
 -- 10. FATURAMENTO POR CATEGORIA (ÚLTIMO ANO)
 -- OBJETIVO: Analisar a performance financeira por categoria, suportando decisões
 -- de investimento, expansão de mix e estratégias comerciais segmentadas.
+
 SELECT
   c.IDCATEGORIA,
   c.NOME_CATEGORIA,
