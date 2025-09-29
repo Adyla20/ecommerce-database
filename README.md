@@ -14,8 +14,14 @@ Solução completa de banco de dados para e-commerce com *12 tabelas normalizada
 | *Logística* | Entregas, rastreamento               | Dados completos de entrega |
 | *Pós-venda* | Avaliações, histórico                | Sistema de feedback        |
 
-## Diagrama de Entidade-Relacionamento do Banco:
-<img src="diagrama.jpg" width="500" alt="Diagrama do Banco de Dados">
+## Diagramas do Banco de Dados:
+<div align="center">
+  
+| Diagrama Conceitual | Diagrama Lógico |
+|:---:|:---:|
+| <img src="diagrama_conceitual.jpg" width="400" title="Diagrama Conceitual"> | <img src="diagrama_logico.jpg" width="400" title="Diagrama Lógico"> |
+
+</div>
 
 ## 🎯 Destaques Técnicos
 
