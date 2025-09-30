@@ -13,7 +13,7 @@ import unicodedata
 
 # Configuração da conexão
 conexao = mysql.connector.connect(
-    host="192.168.0.115",
+    host="127.0.0.1",
     user="root",
     password="1720",
     database="ecommerce_db"
