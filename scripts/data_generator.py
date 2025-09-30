@@ -196,39 +196,24 @@ for i in range(NUM_CLIENTES):
         data_cadastro = gerar_data_aleatoria(DATA_INICIO, DATA_FIM)
 
         if tipo == 'PESSOA_FÍSICA':
-            nome = fake.name()  
-            # Remover possíveis títulos/honoríficos
-            nome = remover_titulos(nome)
-
+            nome = remover_titulos(fake.name())
             cpf = gerar_cpf()
             cnpj = None
             razao_social = None
-
-            # Gerar e-mail baseado no nome
             email = gerar_email_do_nome(nome)
-            # Garantir e-mail único
             while email in emails_utilizados:
                 email = gerar_email_do_nome(nome)
             emails_utilizados.add(email)
-
         else:
-            # Para pessoa jurídica
             razao_social = fake.company()
-            nome = fake.name()  
-            # Remover possíveis títulos/honoríficos do nome do representante
-            nome = remover_titulos(nome)
-]
-
+            nome = remover_titulos(fake.name())
             cpf = None
             cnpj = gerar_cnpj()
-
-            # Gerar e-mail corporativo baseado na razão social
             nome_sem_acentos = remover_acentos(razao_social).lower()
             partes = nome_sem_acentos.replace(' ', '').replace(',', '').replace('.', '').split()
             if partes:
                 email_base = partes[0]
                 email = f"contato@{email_base}.com.br"
-                # Garantir e-mail único
                 while email in emails_utilizados:
                     email = f"{email_base}{random.randint(1, 99)}@empresa.com.br"
                 emails_utilizados.add(email)
@@ -242,6 +227,7 @@ for i in range(NUM_CLIENTES):
         conexao.commit()
 
         cliente_id = cursor.lastrowid
+
         clientes_gerados.append(cliente_id)
 
         # Gerar telefones (1-3 por cliente)
@@ -257,13 +243,10 @@ for i in range(NUM_CLIENTES):
         num_enderecos = random.randint(1, 2)
         for j in range(num_enderecos):
             tipo_end = random.choice(['RESIDENCIAL', 'COMERCIAL'])
-
-            # Gerar complemento de forma mais simples
             complemento = None
             if random.random() > 0.7:
                 complemento_options = ['Apto', 'Casa', 'Sala', 'Bloco', 'Lote']
                 complemento = f"{random.choice(complemento_options)} {random.randint(1, 999)}"
-
             cursor.execute(
                 """INSERT INTO ENDERECOS (ID_CLIENTE, TIPO, LOGRADOURO, NUMERO, COMPLEMENTO, BAIRRO, CIDADE, ESTADO, CEP)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)""",
@@ -271,6 +254,114 @@ for i in range(NUM_CLIENTES):
                  complemento,
                  fake.bairro(), fake.city(), fake.estado_sigla(), fake.postcode().replace('-', ''))
             )
+
+        # Gerar pedidos, pagamentos, entregas, itens e avaliações
+        try:
+            # 70% dos clientes fazem pelo menos 1 pedido
+            if random.random() > 0.3:
+                num_pedidos = random.randint(1, 5) if random.random() > 0.8 else 1
+
+                for _ in range(num_pedidos):
+                    # Buscar endereços do cliente
+                    cursor.execute("SELECT IDENDERECO FROM ENDERECOS WHERE ID_CLIENTE = %s", (cliente_id,))
+                    enderecos_cliente = [end[0] for end in cursor.fetchall()]
+
+                    data_pedido = gerar_data_aleatoria(DATA_INICIO, DATA_FIM)
+                    status_pedido = random.choices(
+                        ['PENDENTE', 'PAGO', 'CANCELADO'],
+                        weights=[0.1, 0.8, 0.1]
+                    )[0]
+
+                    # Inserir pedido
+                    cursor.execute(
+                        "INSERT INTO PEDIDOS (ID_CLIENTE, VALOR_TOTAL, DATA_PEDIDO, STATUS) VALUES (%s, %s, %s, %s)",
+                        (cliente_id, 0, data_pedido, status_pedido)
+                    )
+                    pedido_id = cursor.lastrowid
+
+                    valor_total = 0
+                    num_itens = random.randint(1, 4)
+                    produtos_pedido = random.sample(produtos, min(num_itens, len(produtos)))
+
+                    # Inserir itens do pedido
+                    for produto_id, preco_unitario in produtos_pedido:
+                        quantidade = random.randint(1, 3)
+                        subtotal = preco_unitario * quantidade
+                        valor_total += subtotal
+
+                        cursor.execute(
+                            """INSERT INTO ITENS_PEDIDOS (ID_PEDIDO, ID_PRODUTO, PRECO_UNITARIO, QUANTIDADE)
+                            VALUES (%s, %s, %s, %s)""",
+                            (pedido_id, produto_id, preco_unitario, quantidade)
+                        )
+
+                    # Atualizar valor total do pedido
+                    cursor.execute(
+                        "UPDATE PEDIDOS SET VALOR_TOTAL = %s WHERE IDPEDIDO = %s",
+                        (valor_total, pedido_id)
+                    )
+
+                    # Gerar pagamento (80% dos pedidos têm pagamento)
+                    if status_pedido != 'CANCELADO' and random.random() > 0.2:
+                        metodo = random.choice(['CARTÃO', 'BOLETO', 'PIX'])
+                        status_pagamento = 'APROVADO' if random.random() > 0.1 else 'RECUSADO'
+                        data_pagamento = data_pedido + timedelta(hours=random.randint(1, 72))
+
+                        cursor.execute(
+                            """INSERT INTO PAGAMENTOS (ID_PEDIDO, VALOR_PAGO, METODO, STATUS, DATA_PAGAMENTO)
+                            VALUES (%s, %s, %s, %s, %s)""",
+                            (pedido_id, valor_total, metodo, status_pagamento, data_pagamento)
+                        )
+
+                    # Gerar entrega (90% dos pedidos têm entrega)
+                    if status_pedido != 'CANCELADO' and random.random() > 0.1 and enderecos_cliente:
+                        id_endereco = random.choice(enderecos_cliente)
+                        transportadoras = ['Correios', 'Loggi', 'Jadlog', 'Azul Cargo', 'DHL']
+                        status_entrega = random.choices(
+                            ['PREPARAÇÃO', 'ENVIADO', 'EM_TRANSITO', 'ENTREGUE', 'CANCELADO'],
+                            weights=[0.1, 0.2, 0.3, 0.35, 0.05]
+                        )[0]
+
+                        data_envio = data_pedido + timedelta(days=random.randint(1, 3))
+                        data_prevista = data_envio + timedelta(days=random.randint(3, 10))
+
+                        if status_entrega == 'ENTREGUE':
+                            data_entrega = data_prevista + timedelta(days=random.randint(-2, 5))
+                        else:
+                            data_entrega = None
+
+                        codigo_rastreio = f'BR{random.randint(100000000000000, 999999999999999)}'
+
+                        cursor.execute(
+                            """INSERT INTO ENTREGAS (ID_PEDIDO, ID_ENDERECO, TRANSPORTADORA, DATA_ENVIO,
+                            DATA_PREVISTA, CODIGO_RASTREAMENTO, STATUS, DATA_ENTREGA)
+                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
+                            (pedido_id, id_endereco, random.choice(transportadoras), data_envio,
+                             data_prevista, codigo_rastreio, status_entrega, data_entrega)
+                        )
+
+                    # Gerar avaliações (50% dos pedidos têm avaliação)
+                    if status_pedido == 'PAGO' and random.random() > 0.5:
+                        for produto_id, _ in produtos_pedido:
+                            if random.random() > 0.3:  # 70% chance de avaliar cada produto
+                                nota = random.randint(3, 5) if random.random() > 0.2 else random.randint(1, 2)
+
+                                # 60% chance de ter comentário, 40% chance de ser apenas nota
+                                comentario = gerar_comentario_avaliacao(produto_id, nota) if random.random() > 0.4 else None
+                                data_avaliacao = data_pedido + timedelta(days=random.randint(1, 30))
+
+                                cursor.execute(
+                                    """INSERT INTO AVALIACOES (ID_CLIENTE, ID_PRODUTO, NOTA, COMENTARIO, DATA_AVALIACAO)
+                                    VALUES (%s, %s, %s, %s, %s)""",
+                                    (cliente_id, produto_id, nota, comentario, data_avaliacao)
+                                )
+
+            if (i + 1) % 100 == 0:
+                print(f"Processados: {i + 1}/{NUM_CLIENTES} clientes")
+                conexao.commit()
+        except mysql.connector.Error as err:
+            print(f"Erro ao processar cliente {cliente_id}: {err}")
+            conexao.rollback()
 
         if (i + 1) % 100 == 0:
             print(f"Clientes gerados: {i + 1}/{NUM_CLIENTES}")
