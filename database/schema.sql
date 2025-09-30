@@ -161,3 +161,108 @@ CREATE DATABASE ECOMMERCE_DB;
  CONSTRAINT FK_PRODUTOS_AVALIACOES
  FOREIGN KEY (ID_PRODUTO) REFERENCES PRODUTOS(IDPRODUTO)
  );
+
+
+
+/* INSERINDO REGISTROS NA TABELA CATEGORIAS*/
+ 
+ 
+ INSERT INTO CATEGORIAS (NOME_CATEGORIA, DESCRICAO) VALUES
+('Smartphones', 'Telefones inteligentes de última geração'),
+('Notebooks', 'Computadores portáteis de alto desempenho'),
+('Acessórios Eletrônicos', 'Acessórios para dispositivos eletrônicos'),
+('Relógios', 'Relógios de pulso de diversas marcas'),
+('Bolsas e Carteiras', 'Acessórios de moda para carregar pertences'),
+('Tênis', 'Calçados esportivos e casuais'),
+('Perfumes', 'Fragrâncias importadas de luxo');
+
+
+
+/* INSERINDO REGISTROS NA TABELA FORNECEDORES*/
+
+INSERT INTO FORNECEDORES (NOME_FORNECEDOR, CNPJ, EMAIL, TELEFONE) VALUES
+('Apple Inc', '12345678000101', 'fornecedor@apple.com', '+11234567890'),
+('Samsung Eletronics', '12345678000102', 'fornecedor@samsung.com', '+82234567890'),
+('Xiaomi Corporation', '12345678000103', 'fornecedor@xiaomi.com', '+86234567890'),
+('Dell Technologies', '12345678000104', 'fornecedor@dell.com', '+18023456789'),
+('Huawei Technologies', '12345678000105', 'fornecedor@huawei.com', '+86234567891'),
+('Sony Corporation', '12345678000106', 'fornecedor@sony.com', '+81345678901'),
+('Garmin International', '12345678000107', 'fornecedor@garmin.com', '+18023456788'),
+('Lenovo Group', '12345678000108', 'fornecedor@lenovo.com', '+86234567892'),
+('Rolex SA', '12345678000109', 'fornecedor@rolex.com', '+41234567890'),
+('Casio Computer', '12345678000110', 'fornecedor@casio.com', '+81345678902'),
+('Fossil Group', '12345678000111', 'fornecedor@fossil.com', '+18023456787'),
+('Michael Kors', '12345678000112', 'fornecedor@mk.com', '+12123456789'),
+('Longchamp', '12345678000113', 'fornecedor@longchamp.com', '+33123456789'),
+('Charles & Keith', '12345678000114', 'fornecedor@charleskeith.com', '+6561234567'),
+('Nike Inc', '12345678000115', 'fornecedor@nike.com', '+18023456786'),
+('Adidas AG', '12345678000116', 'fornecedor@adidas.com', '+49234567890'),
+('New Balance', '12345678000117', 'fornecedor@newbalance.com', '+18023456785'),
+('Chanel', '12345678000118', 'fornecedor@chanel.com', '+33123456788'),
+('Jo Malone', '12345678000119', 'fornecedor@jomalone.com', '+441234567890'),
+('Creed', '12345678000120', 'fornecedor@creed.com', '+33123456787');
+
+
+/* INSERINDO REGISTROS NA TABELA PRODUTOS*/
+
+INSERT INTO PRODUTOS (NOME_PRODUTO, ID_CATEGORIA, DESCRICAO, PRECO_UNITARIO, QUANTIDADE_ESTOQUE, ID_FORNECEDOR) VALUES
+('iPhone 15 Pro Max', 1, 'Apple iPhone 15 Pro Max 256GB Titanium', 8999.90, 150, 1),
+('Samsung Galaxy S23 Ultra', 1, 'Samsung Galaxy S23 Ultra 256GB 5G', 7499.90, 200, 2),
+('Xiaomi 14 Pro', 1, 'Xiaomi 14 Pro 256GB 5G', 4999.90, 300, 3),
+('iPhone 14', 1, 'Apple iPhone 14 128GB', 4999.90, 180, 1),
+('Samsung Galaxy Z Flip5', 1, 'Samsung Galaxy Z Flip5 256GB Dobrável', 5999.90, 120, 2),
+('Xiaomi Redmi Note 13 Pro', 1, 'Xiaomi Redmi Note 13 Pro 128GB', 1999.90, 400, 3);
+
+
+INSERT INTO PRODUTOS (NOME_PRODUTO, ID_CATEGORIA, DESCRICAO, PRECO_UNITARIO, QUANTIDADE_ESTOQUE, ID_FORNECEDOR) VALUES
+('MacBook Pro 16 M3', 2, 'MacBook Pro 16" M3 Pro 512GB SSD', 15999.90, 80, 1),
+('Dell XPS 15', 2, 'Dell XPS 15 12th Gen i7 512GB SSD', 8999.90, 100, 4),
+('Huawei MateBook X Pro', 2, 'Huawei MateBook X Pro i7 512GB SSD', 7999.90, 90, 5),
+('MacBook Air M2', 2, 'MacBook Air 13.6" M2 256GB SSD', 7999.90, 120, 1),
+('Dell Alienware x16', 2, 'Dell Alienware x16 RTX 4080 1TB SSD', 22999.90, 40, 4),
+('Huawei MateBook D15', 2, 'Huawei MateBook D15 i5 256GB SSD', 3999.90, 150, 5);
+
+
+INSERT INTO PRODUTOS (NOME_PRODUTO, ID_CATEGORIA, DESCRICAO, PRECO_UNITARIO, QUANTIDADE_ESTOQUE, ID_FORNECEDOR) VALUES
+('Sony WH-1000XM5', 3, 'Fone de ouvido sem fio Sony WH-1000XM5', 2499.90, 200, 6),
+('Garmin Fenix 7X', 3, 'Smartwatch Garmin Fenix 7X Solar', 4999.90, 100, 7),
+('Lenovo Tab P12 Pro', 3, 'Tablet Lenovo Tab P12 Pro 256GB', 3999.90, 120, 8),
+('Sony WF-1000XM4', 3, 'Fone de ouvido intra-auricular Sony WF-1000XM4', 1499.90, 250, 6),
+('Garmin Venu 3', 3, 'Smartwatch Garmin Venu 3', 2999.90, 150, 7),
+('Lenovo Yoga Tab 13', 3, 'Tablet Lenovo Yoga Tab 13 128GB', 2999.90, 180, 8);
+
+
+INSERT INTO PRODUTOS (NOME_PRODUTO, ID_CATEGORIA, DESCRICAO, PRECO_UNITARIO, QUANTIDADE_ESTOQUE, ID_FORNECEDOR) VALUES
+('Rolex Submariner Date', 4, 'Rolex Submariner Date 41mm Aço', 59999.90, 20, 9),
+('Casio G-Shock DW5600', 4, 'Casio G-Shock DW5600-1V', 899.90, 300, 10),
+('Fossil Gen 6', 4, 'Smartwatch Fossil Gen 6 44mm', 1299.90, 150, 11),
+('Rolex Datejust 36', 4, 'Rolex Datejust 36mm Ouro e Aço', 45999.90, 15, 9),
+('Casio Edifice EFR-S108D', 4, 'Casio Edifice EFR-S108D-2AVUDF', 799.90, 250, 10),
+('Fossil Carlie', 4, 'Relógio Feminino Fossil Carlie', 699.90, 200, 11);
+
+
+INSERT INTO PRODUTOS (NOME_PRODUTO, ID_CATEGORIA, DESCRICAO, PRECO_UNITARIO, QUANTIDADE_ESTOQUE, ID_FORNECEDOR) VALUES
+('Michael Kors Jet Set', 5, 'Bolsa Michael Kors Jet Set Medium Crossbody', 1299.90, 100, 12),
+('Longchamp Le Pliage', 5, 'Bolsa Longchamp Le Pliage Large', 899.90, 150, 13),
+('Charles & Keith Croc-Effect', 5, 'Bolsa Charles & Keith Croc-Effect Shoulder Bag', 599.90, 200, 14),
+('Michael Kors Bedford', 5, 'Bolsa Michael Kors Bedford Large Tote', 1599.90, 80, 12),
+('Longchamp Box-Trot', 5, 'Bolsa Longchamp Box-Trot Medium', 1499.90, 120, 13),
+('Charles & Keith Tassel', 5, 'Bolsa Charles & Keith Tassel Hobo Bag', 499.90, 180, 14);
+
+
+INSERT INTO PRODUTOS (NOME_PRODUTO, ID_CATEGORIA, DESCRICAO, PRECO_UNITARIO, QUANTIDADE_ESTOQUE, ID_FORNECEDOR) VALUES
+('Nike Air Max 270', 6, 'Tênis Nike Air Max 270 Masculino', 899.90, 300, 15),
+('Adidas Ultraboost 22', 6, 'Tênis Adidas Ultraboost 22', 799.90, 250, 16),
+('New Balance 574', 6, 'Tênis New Balance 574 Core', 599.90, 350, 17),
+('Nike Air Force 1', 6, 'Tênis Nike Air Force 1 Low', 699.90, 400, 15),
+('Adidas NMD_R1', 6, 'Tênis Adidas NMD_R1', 649.90, 300, 16),
+('New Balance 997H', 6, 'Tênis New Balance 997H', 549.90, 280, 17);
+
+
+INSERT INTO PRODUTOS (NOME_PRODUTO, ID_CATEGORIA, DESCRICAO, PRECO_UNITARIO, QUANTIDADE_ESTOQUE, ID_FORNECEDOR) VALUES
+('Chanel N°5 Eau de Parfum', 7, 'Perfume Chanel N°5 Eau de Parfum 100ml', 899.90, 120, 18),
+('Jo Malone Wood Sage & Sea Salt', 7, 'Perfume Jo Malone Wood Sage & Sea Salt 100ml', 699.90, 150, 19),
+('Creed Aventus', 7, 'Perfume Creed Aventus 100ml', 1299.90, 80, 20),
+('Chanel Coco Mademoiselle', 7, 'Perfume Chanel Coco Mademoiselle 100ml', 799.90, 100, 18),
+('Jo Malone English Pear & Freesia', 7, 'Perfume Jo Malone English Pear & Freesia 100ml', 649.90, 130, 19),
+('Creed Silver Mountain Water', 7, 'Perfume Creed Silver Mountain Water 100ml', 1199.90, 70, 20);
