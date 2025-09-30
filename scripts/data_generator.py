@@ -236,8 +236,8 @@ for i in range(NUM_CLIENTES):
                 email = fake.unique.email()
 
         cursor.execute(
-            "INSERT INTO CLIENTES (NOME, EMAIL, SEXO, TIPO, CPF, CNPJ, RAZAO_SOCIAL, DATA_CADASTRO) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-            (nome, email, sexo, tipo, cpf, cnpj, razao_social, data_cadastro)
+            "INSERT INTO CLIENTES (NOME, EMAIL, TIPO, CPF, CNPJ, RAZAO_SOCIAL, DATA_CADASTRO) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+            (nome, email, tipo, cpf, cnpj, razao_social, data_cadastro)
         )
         conexao.commit()
 
